@@ -9,4 +9,5 @@ urlpatterns = [
     path('<int:id>/', product_detail_view, name='product_detail'),
     path('create/', post_create_view, name='post_create'),
     path('create/', create_post, name='create_post'),
+    path('posts/', post_list_view, name='post_list'), 
 ]
