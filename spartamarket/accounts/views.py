@@ -1,7 +1,8 @@
 # accounts/views.py
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 def login_view(request):
     if request.method == 'POST':
@@ -31,3 +32,9 @@ def register_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'accounts/register.html', {'form': form})
+
+
+def profile_view(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    #  사용자 프로필 데이터를 처리
+    return render(request, 'accounts/profile.html', {'profile_user': user})
