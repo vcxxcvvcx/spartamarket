@@ -27,3 +27,10 @@ def post_create_view(request):
     else:
         form = PostForm()
     return render(request, 'products/post_create.html', {'form': form})
+
+
+def create_post(request):
+    if request.method == 'POST':
+        # POST 요청 처리 로직
+        return redirect('some-view')
+    return render(request, 'products/create_post.html')
