@@ -21,7 +21,6 @@ def logout_view(request):
     return redirect('index')
 
 
-
 def register_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
