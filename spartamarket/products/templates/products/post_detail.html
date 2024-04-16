@@ -19,9 +19,9 @@
     <p>Written by: {{ post.user.username }}</p>  
     <p class="card-text">{{ post.price }} | {{ post.address }}</p>
     <p class="card-text">{{ post.likes }} likes</p>
-    <a href="{% url 'products:post_edit' post.id %}" class="btn btn-primary">Edit</a>
+    <a href="{% url 'products:post_edit' post.id %}" class="btn btn-primary">수정</a>
     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-        Delete
+        삭제
     </button>
 
 
@@ -34,7 +34,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete this post?
+                정말로 삭제하실??
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

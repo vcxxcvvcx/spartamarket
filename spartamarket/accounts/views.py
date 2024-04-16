@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Profile, Follow,Favorite
+from products.models import Post
 
 def login_view(request):
     if request.method == 'POST':
@@ -34,7 +36,22 @@ def register_view(request):
     return render(request, 'accounts/register.html', {'form': form})
 
 
-def profile_view(request, user_id):
-    user = get_object_or_404(User, pk=user_id)
-    #  사용자 프로필 데이터를 처리
-    return render(request, 'accounts/profile.html', {'profile_user': user})
+def profile_view(request, username):
+    user = get_object_or_404(User, username=username)
+    if not hasattr(user, 'profile'):
+        # 프로필이 존재하지 않는 경우, 생성합니다.
+        Profile.objects.create(user=user)
+
+    posts = user.posts.all()  # 유저가 등록한 물품
+    favorites = user.profile.favorites.all()  # 유저가 찜한 물품
+    followers = user.followers.count()  # 해당 유저를 팔로우하는 사용자 수
+    following = user.following.count()  # 해당 유저가 팔로우하는 사용자 수
+
+    return render(request, 'accounts/profile.html', {
+        'user': user,
+        'posts': posts,
+        'favorites': favorites,
+        'followers': followers,
+        'following': following
+    })
+

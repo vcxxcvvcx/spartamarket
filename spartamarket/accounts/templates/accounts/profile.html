@@ -1,0 +1,22 @@
+<!--profile.html-->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ user.username }}의 프로필</h1>
+<p>가입일: {{ user.profile.joined_at }}</p>
+<p>팔로워: {{ followers }}명 | 팔로잉: {{ following }}명</p>
+
+<h2>내 물품</h2>
+<ul>
+    {% for post in posts %}
+    <li>{{ post.title }}</li>
+    {% endfor %}
+</ul>
+
+<h2>찜한 물품</h2>
+<ul>
+    {% for post in favorites %}
+    <li>{{ post.title }} - {{ post.price }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
