@@ -1,7 +1,7 @@
 # products/views.py
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Product, Post
-from .forms import PostForm, ProductForm
+from .models import Post
+from .forms import PostForm
 from django.http import HttpResponse
 
 def index_view(request):
@@ -27,16 +27,16 @@ def post_create_view(request):
     return render(request, 'products/post_create.html', {'form': form})
 
 
-def product_update(request, id):
-    product = get_object_or_404(Product, pk=id)
+def post_edit_view(request, id):
+    post = get_object_or_404(Post, pk=id)
     if request.method == 'POST':
-        form = ProductForm(request.POST, request.FILES, instance=product)
+        form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
-            return redirect('products:index')
+            return redirect('products:post_detail', id=post.id)
     else:
-        form = ProductForm(instance=product)
-    return render(request, 'products/product_form.html', {'form': form})
+        form = PostForm(instance=post)
+    return render(request, 'products/post_edit.html', {'form': form, 'post': post})
 
 
 def product_delete(request, id):

@@ -1,14 +1,29 @@
-<!-- product_detail.html -->
+<!-- post_detail.html -->
 {% extends 'base.html' %}
 
+{% load static %}
+
+
 {% block content %}
-<h5 class="card-title">{{ post.title }}</h5>
-                    <p class="card-text">{{ post.price }} | {{ post.address }}</p>
-                    <p class="card-text">{{ post.likes }} likes</p>
-<a href="{% url 'products:product_update' post.id %}">Edit</a>
-<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-    Delete
-</button>
+<div class="container">
+    <h1>{{ post.title }}</h1>
+    <div>
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid">
+        {% else %}
+            <img src="{% static 'base.jpeg' %}" alt="Default Image" class="img-fluid">
+        {% endif %}
+    </div>
+    <h5 class="mt-3">{{ post.title }}</h5>
+    <p>{{ post.content }}</p>  
+    <p>Written by: {{ post.user.username }}</p>  
+    <p class="card-text">{{ post.price }} | {{ post.address }}</p>
+    <p class="card-text">{{ post.likes }} likes</p>
+    <a href="{% url 'products:post_edit' post.id %}" class="btn btn-primary">Edit</a>
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+        Delete
+    </button>
+
 
 <!-- Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">

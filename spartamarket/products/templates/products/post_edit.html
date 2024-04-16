@@ -1,0 +1,14 @@
+<!-- post_edit.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Post 수정</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">저장</button>
+        <a href="{% url 'products:post_detail' id=post.id %}" class="btn btn-secondary">취소</a>
+    </form>
+</div>
+{% endblock %}
