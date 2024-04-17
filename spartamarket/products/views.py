@@ -1,17 +1,25 @@
 # products/views.py
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post
+from .models import Post, Like
 from .forms import PostForm
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
+from django.core.paginator import Paginator
 
 def index_view(request):
-    posts = Post.objects.all().order_by('-created_at')
+    posts_list = Post.objects.all().order_by('-created_at')
+    paginator = Paginator(posts_list, 9)  # 한 페이지 당 9개의 게시물
+    
+    page_number = request.GET.get('page')  # URL에서 페이지 번호
+    posts = paginator.get_page(page_number)
+    
     return render(request, 'index.html', {'posts': posts})
 
 
 def post_detail(request, id):
     post = get_object_or_404(Post, pk=id)
-    return render(request, 'products/post_detail.html', {'post': post})
+    like_count = post.like_entries.count()
+    return render(request, 'products/post_detail.html', {'post': post, 'like_count': like_count})
 
 
 def post_create_view(request):
@@ -43,3 +51,10 @@ def product_delete(request, id):
     post = get_object_or_404(Post, id=id)
     post.delete()
     return redirect('products:index')
+
+def toggle_like(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    like, created = Like.objects.get_or_create(user=request.user, post=post)
+    if not created:
+        like.delete() 
+    return HttpResponseRedirect(reverse('products:post_detail', args=[post_id]))

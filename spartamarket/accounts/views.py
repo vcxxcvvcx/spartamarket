@@ -24,26 +24,30 @@ def logout_view(request):
     return redirect('index')
 
 
+# accounts/views.py
 def register_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
+            login(request, user)  # Log in the user immediately after registration
             return redirect('index')
+        else:
+            return render(request, 'accounts/register.html', {'form': form, 'error': 'Please check your input.'})
     else:
         form = UserCreationForm()
     return render(request, 'accounts/register.html', {'form': form})
 
 
+
 def profile_view(request, username):
     user = get_object_or_404(User, username=username)
     if not hasattr(user, 'profile'):
-        # 프로필이 존재하지 않는 경우, 생성합니다.
         Profile.objects.create(user=user)
 
     posts = user.posts.all()  # 유저가 등록한 물품
     favorites = user.profile.favorites.all()  # 유저가 찜한 물품
+    print(favorites) 
     followers = user.followers.count()  # 해당 유저를 팔로우하는 사용자 수
     following = user.following.count()  # 해당 유저가 팔로우하는 사용자 수
 

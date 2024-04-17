@@ -31,5 +31,24 @@
         </div>
         {% endfor %}
     </div>
+    
+    <div class="pagination">
+        <span class="step-links">
+            {% if posts.has_previous %}
+                <a href="?page=1">&laquo; 첫페이지</a>
+                <a href="?page={{ posts.previous_page_number }}">이전으로</a>
+            {% endif %}
+            
+            <span class="current">
+                Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+            </span>
+            
+            {% if posts.has_next %}
+                <a href="?page={{ posts.next_page_number }}">다음</a>
+                <a href="?page={{ posts.paginator.num_pages }}">끝으로 &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    
 </div>
 {% endblock %}
