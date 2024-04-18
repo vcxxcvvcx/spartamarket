@@ -6,6 +6,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Sparta Market{% endblock %}</title>
+    <link rel="icon" href="{% static 'carrot.jpeg' %}" type="image/jpeg">
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -18,7 +20,11 @@
       <!-- 네비바 -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'index' %}">Sparta Market</a>
+          <a class="navbar-brand" href="{% url 'index' %}">
+            <img src="{% static 'carrot.jpeg' %}" alt="Carrot" style="height: 24px; margin-right: 8px; margin-bottom: 2px;">
+            Sparta Market
+        </a>
+        
           {% if user.is_authenticated %}
     <a href="{% url 'products:post_create' %}" class="btn btn-primary">글쓰기</a>
 {% else %}

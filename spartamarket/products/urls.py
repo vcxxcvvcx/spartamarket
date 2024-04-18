@@ -2,6 +2,7 @@
 from django.urls import path
 from .views import index_view, post_create_view, post_detail, post_edit_view, product_delete, toggle_like
 
+
 app_name = 'products' 
 
 urlpatterns = [
