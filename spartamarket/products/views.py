@@ -5,15 +5,21 @@ from .forms import PostForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.core.paginator import Paginator
+from django.db.models import Count
+
+# products/views.py 수정
+from django.db.models import Count
 
 def index_view(request):
-    posts_list = Post.objects.all().order_by('-created_at')
+    posts_list = Post.objects.annotate(like_count=Count('like_entries')).order_by('-created_at')
     paginator = Paginator(posts_list, 9)  # 한 페이지 당 9개의 게시물
-    
-    page_number = request.GET.get('page')  # URL에서 페이지 번호
+
+    page_number = request.GET.get('page')
     posts = paginator.get_page(page_number)
-    
+
     return render(request, 'index.html', {'posts': posts})
+
+
 
 
 def post_detail(request, id):
