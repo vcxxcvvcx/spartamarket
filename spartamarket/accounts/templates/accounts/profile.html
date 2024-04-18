@@ -5,6 +5,16 @@
 <h1>{{ user.username }}의 프로필</h1>
 <p>가입일: {{ user.profile.joined_at }}</p>
 <p>팔로워: {{ followers }}명 | 팔로잉: {{ following }}명</p>
+{% if user != request.user %}
+    <form action="{% url 'accounts:follow_user' user.username %}" method="post">
+        {% csrf_token %}
+        {% if user in request.user.following.all %}
+            <button type="submit" class="btn btn-danger">언팔로우</button>
+        {% else %}
+            <button type="submit" class="btn btn-primary">팔로우</button>
+        {% endif %}
+    </form>
+{% endif %}
 
 <h2>내 물품</h2>
 <ul>

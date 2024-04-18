@@ -1,10 +1,11 @@
 # accounts/views.py
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile, Follow,Favorite
 from products.models import Post
+from django.contrib.auth.decorators import login_required
 
 def login_view(request):
     if request.method == 'POST':
@@ -24,13 +25,13 @@ def logout_view(request):
     return redirect('index')
 
 
-# accounts/views.py
+
 def register_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # Log in the user immediately after registration
+            login(request, user)  
             return redirect('index')
         else:
             return render(request, 'accounts/register.html', {'form': form, 'error': 'Please check your input.'})
@@ -45,11 +46,11 @@ def profile_view(request, username):
     if not hasattr(user, 'profile'):
         Profile.objects.create(user=user)
 
-    posts = user.posts.all()  # 유저가 등록한 물품
-    favorites = user.profile.favorites.all()  # 유저가 찜한 물품
+    posts = user.posts.all()  
+    favorites = user.profile.favorites.all()  
     print(favorites) 
-    followers = user.followers.count()  # 해당 유저를 팔로우하는 사용자 수
-    following = user.following.count()  # 해당 유저가 팔로우하는 사용자 수
+    followers = user.followers.count() 
+    following = user.following.count()  
 
     return render(request, 'accounts/profile.html', {
         'user': user,
@@ -59,3 +60,11 @@ def profile_view(request, username):
         'following': following
     })
 
+@login_required
+def follow_user(request, username):
+    user_to_follow = get_object_or_404(get_user_model(), username=username)
+    if request.user != user_to_follow:
+        follow, created = Follow.objects.get_or_create(follower=request.user, following=user_to_follow)
+        if not created:
+            follow.delete()  
+    return redirect('accounts:user_profile', username=username)
