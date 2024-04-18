@@ -21,6 +21,9 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ post.title }}</h5>
                         <p class="card-text">{{ post.price }} | {{ post.address }}</p>
+                        <p class="card-text">
+                            작성자: <a href="{% url 'accounts:user_profile' username=post.user.username %}">{{ post.user.username }}</a>
+                        </p>
                         <p class="card-text">{{ post.like_count }} 좋아요</p>
                     </div>
                 </div>
