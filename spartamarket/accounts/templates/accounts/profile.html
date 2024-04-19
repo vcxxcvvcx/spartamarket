@@ -8,11 +8,9 @@
 {% if user != request.user %}
     <form action="{% url 'accounts:follow_user' user.username %}" method="post">
         {% csrf_token %}
-        {% if user in request.user.following.all %}
-            <button type="submit" class="btn btn-danger">언팔로우</button>
-        {% else %}
+        
             <button type="submit" class="btn btn-primary">팔로우</button>
-        {% endif %}
+
     </form>
 {% endif %}
 
@@ -26,7 +24,9 @@
 <h2>좋아요 한 물품</h2>
 <ul>
     {% for post in favorites %}
-    <li>{{ post.title }} - {{ post.price }}</li>
+    <li>
+        <a href="{% url 'products:post_detail' post.id %}">{{ post.title }}</a> - {{ post.price }}원
+    </li>
     {% endfor %}
 </ul>
 {% endblock %}

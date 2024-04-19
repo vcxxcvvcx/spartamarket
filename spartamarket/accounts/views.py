@@ -47,8 +47,7 @@ def profile_view(request, username):
         Profile.objects.create(user=user)
 
     posts = user.posts.all()  
-    favorites = user.profile.favorites.all()  
-    print(favorites) 
+    favorites = Post.objects.filter(like_entries__user=user)  
     followers = user.followers.count() 
     following = user.following.count()  
 
@@ -59,6 +58,7 @@ def profile_view(request, username):
         'followers': followers,
         'following': following
     })
+
 
 @login_required
 def follow_user(request, username):

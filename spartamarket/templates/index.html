@@ -20,7 +20,7 @@
                     </a>
                     <div class="card-body">
                         <h5 class="card-title">{{ post.title }}</h5>
-                        <p class="card-text">{{ post.price }} | {{ post.address }}</p>
+                        <p class="card-text">{{ post.price }}원 | {{ post.address }}</p>
                         <p class="card-text">
                             작성자: <a href="{% url 'accounts:user_profile' username=post.user.username %}">{{ post.user.username }}</a>
                         </p>
