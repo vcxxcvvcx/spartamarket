@@ -25,7 +25,7 @@
 <ul>
     {% for post in favorites %}
     <li>
-        <a href="{% url 'products:post_detail' post.id %}">{{ post.title }}</a> - {{ post.price }}원
+        <a href="{% url 'products:post_detail' post.id %}">{{ post.title }}</a> - {{ post.price }}
     </li>
     {% endfor %}
 </ul>
