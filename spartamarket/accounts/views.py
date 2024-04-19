@@ -3,8 +3,8 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Profile, Follow,Favorite
-from products.models import Post
+from .models import Profile, Follow
+from products.models import Post, Like
 from django.contrib.auth.decorators import login_required
 
 def login_view(request):

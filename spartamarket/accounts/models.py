@@ -24,12 +24,12 @@ class Follow(models.Model):
     def __str__(self):
         return f'{self.follower.username} -> {self.following.username}'
 
-class Favorite(models.Model):
-    user = models.ForeignKey('auth.User', related_name='favorites', on_delete=models.CASCADE)
-    post = models.ForeignKey('products.Post', related_name='post_favorited_by', on_delete=models.CASCADE)
+# class Favorite(models.Model):
+#     user = models.ForeignKey('auth.User', related_name='favorites', on_delete=models.CASCADE)
+#     post = models.ForeignKey('products.Post', related_name='post_favorited_by', on_delete=models.CASCADE)
 
-    class Meta:
-        unique_together = ('user', 'post')
+#     class Meta:
+#         unique_together = ('user', 'post')
 
-    def __str__(self):
-        return f"{self.user.username} likes post {self.post_id}"
+#     def __str__(self):
+#         return f"{self.user.username} likes post {self.post_id}"
