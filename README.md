@@ -32,17 +32,17 @@
 #### templates/: Django 템플릿 파일
 #### static/: CSS, 이미지 등의 정적파일
 
-#### 실행방법
-파일 오픈후 터미널 실행
-python -m venv venv
-source venv/Scripts/activate  (윈도우의 경우)
-pip install django==4.2
-python -m pip install Pillow
+## 실행방법
+#### 파일 오픈후 터미널 실행
+#### python -m venv venv
+#### source venv/Scripts/activate  (윈도우의 경우)
+#### pip install django==4.2
+#### python -m pip install Pillow
 
-cd spartamarket
-python manage.py makemigrations
-python manage.py migrate
-python manage.py runserver
+#### cd spartamarket
+#### python manage.py makemigrations
+#### python manage.py migrate
+#### python manage.py runserver
 
 #### TMI 
 - 깃 이그노어를 나중에 올려서 venv에 적용하려다가 모든파일이 날아갈뻔해서 venv를 수동으로 날려버렸음
